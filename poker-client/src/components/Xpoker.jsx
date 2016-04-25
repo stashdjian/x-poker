@@ -1,9 +1,13 @@
 import React from 'react';
+import {List} from 'immutable';
+
 
 export default React.createClass({
   render: function() {
-    return <div className="x-poker">
-      XPoker App Goes Here
-    </div>;
+    var content = React.cloneElement(this.props.children);
+    return <div>
+      <div>{content}</div>
+    </div>
+
   }
 });

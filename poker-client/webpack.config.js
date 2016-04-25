@@ -10,7 +10,7 @@ module.exports = {
     loaders: [{
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      loader: 'react-hot!babel'
+      loader: 'react-hot!babel?presets[]=es2015&presets[]=react'
     }]
   },
   resolve: {
@@ -23,7 +23,8 @@ module.exports = {
   },
   devServer: {
     contentBase: './dist',
-    hot: true
+    hot: true,
+    historyApiFallback: true
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin()
