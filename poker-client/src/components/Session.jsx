@@ -4,13 +4,12 @@ import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
 import {connect} from 'react-redux';
 
-export default React.createClass({
-  contextTypes : {
-    redux: React.PropTypes.object
-  },
+export const pureSession = React.createClass({
+
 
   componentDidMount: function(){
-    this.context.dispatch({type: 'SET_APP_BAR', title: 'Create Session', rightBtn: 'Save' });
+    const {dispatch} = this.props;
+    dispatch({type: 'SET_APP_BAR', title: 'Create Session', rightBtn: 'Save' });
   },
 
   getInitialState: function() {
@@ -54,3 +53,5 @@ export default React.createClass({
     </div>;
   }
 });
+
+export const Session = connect()(pureSession);

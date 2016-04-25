@@ -7,7 +7,8 @@ export const pureHome = React.createClass({
   },
 
   componentDidMount: function(){
-    this.context.dispatch({type: 'SET_APP_BAR', title: 'X-Poker', rightBtn: false });
+    const {dispatch} = this.props;
+    dispatch({type: 'SET_APP_BAR', title: 'X-Poker', rightBtn: false });
   },
 
   render: function() {

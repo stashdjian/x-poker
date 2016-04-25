@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, browserHistory} from 'react-router';
 import Xpoker from './components/Xpoker';
-import Home from './components/Home';
-import Session from './components/Session';
+import {Home} from './components/Home';
+import {Session} from './components/Session';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import reducer from './reducer';
@@ -34,7 +34,7 @@ ReactDOM.render(
     <div>
       <XAppBar title="" rightBtn=""></XAppBar>
       <Router history={browserHistory}>{routes}</Router>
-    </div>    
+    </div>
   </Provider>,
   document.getElementById('x-poker-app')
 );
