@@ -9,6 +9,7 @@ import {Provider} from 'react-redux';
 import reducer from './reducer';
 import {XAppBar} from './components/XAppBar';
 
+
 const store = createStore(reducer);
 store.dispatch({
   type: 'SET_STATE',
@@ -19,8 +20,17 @@ store.dispatch({
     appBar: {
       title: 'X-Poker',
       rightBtn: false
-    }
+    },
+    sessions:[]
   }
+});
+
+var ref = new Firebase("https://burning-torch-5453.firebaseio.com/sessions");
+
+ref.on("child_added", function(snapshot) {
+  store.dispatch({type:"READ_SESSION",session:snapshot.val()});
+}, function (errorObject) {
+  console.log("The read failed: " + errorObject.code);
 });
 
 
@@ -30,7 +40,7 @@ const routes = <Route component={Xpoker}>
 </Route>;
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={store} fbref={ref}>
     <div>
       <XAppBar title="" rightBtn=""></XAppBar>
       <Router history={browserHistory}>{routes}</Router>

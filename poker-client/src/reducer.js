@@ -1,5 +1,7 @@
+import { combineReducers } from 'redux'
+import { sessionReducer } from './components/Session'
 
-export default function(state = {}, action) {
+var reducer = function(state = {}, action) {
   switch (action.type) {
     case 'SET_STATE':
       return action.state;
@@ -11,7 +13,20 @@ export default function(state = {}, action) {
     return Object.assign({}, state, {
         appBar: {title: action.title, rightBtn: action.rightBtn }
       });
+    case 'APP_BAR_BTN':
+    return Object.assign({}, state, {
+        appBarAction: action.action
+      });
+    case 'READ_SESSION':
+    return Object.assign({}, state, {
+        sessions: state.sessions.concat(action.session)
+      });
 
   }
   return state;
 }
+
+export default combineReducers({
+  app:reducer,
+  session:sessionReducer
+})

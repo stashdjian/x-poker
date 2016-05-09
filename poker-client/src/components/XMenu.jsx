@@ -46,7 +46,7 @@ export const pureXMenu = React.createClass({
 
 function mapStateToProps(state) {
   return {
-    open: state.menuState.open
+    open: state.app.menuState.open
   };
 }
 

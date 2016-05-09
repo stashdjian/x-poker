@@ -9,49 +9,42 @@ export const pureSession = React.createClass({
 
   componentDidMount: function(){
     const {dispatch} = this.props;
-    dispatch({type: 'SET_APP_BAR', title: 'Create Session', rightBtn: 'Save' });
+    dispatch({type: 'SET_APP_BAR', title: 'Create Session', rightBtn: {text:'Save',action:'SESSION_SAVE'} });
   },
 
-  getInitialState: function() {
-    return {dialogOpen: false};
-  },
-
-  onSave(event){
-    this.setState({dialogOpen: true});
-  },
-
-  handleDialogClose(event){
-    this.setState({dialogOpen: false});
-  },
 
   render: function() {
-    const actions = [
-      <FlatButton
-        label="Cancel"
-        secondary={true}
-        onTouchTap={this.handleDialogClose}
-      />,
-      <FlatButton
-        label="OK"
-        primary={true}
-        keyboardFocused={true}
-        onTouchTap={this.handleDialogClose}
-      />,
-    ];
     return <div className="session">
-      <Dialog
-        title="Confirm"
-        actions={actions}
-        modal={false}
-        open={this.state.dialogOpen}
-        onRequestClose={this.handleClose}
-      >
-        You are saving this session.
-      </Dialog>
       <h3>Define your Session</h3>
       <SessionForm/>
     </div>;
   }
 });
 
-export const Session = connect()(pureSession);
+function mapStateToProps(state,ownProps) {
+  return {saving: state.session.saveInProgress};
+};
+
+
+export const Session = connect(mapStateToProps)(pureSession);
+
+var ref = new Firebase("https://burning-torch-5453.firebaseio.com/sessions");
+
+export function sessionReducer(state = {saveInProgress:false}, action) {
+  switch (action.type) {
+    case 'SESSION_SAVE':
+      ref.push({ title: state.title, voting: state.voting});
+      console.log(state);
+      return state;
+    case 'SESSION_SET_TITLE':
+      return Object.assign({}, state, {
+          title: action.title}
+        );
+    case 'SESSION_SET_VOTING':
+      return Object.assign({}, state, {
+          voting: action.voting}
+        );
+    default:
+      return state
+  }
+}

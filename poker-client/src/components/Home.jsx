@@ -1,4 +1,5 @@
 import React from 'react';
+import {List,ListItem} from 'material-ui/lib/lists';
 import {connect} from 'react-redux';
 
 export const pureHome = React.createClass({
@@ -14,8 +15,19 @@ export const pureHome = React.createClass({
   render: function() {
     return <div className="x-poker">
         <h3>This is our home page.</h3>
+        <List>
+          {
+          this.props.sessions.map(function(session) {
+            return <ListItem key={session.title} primaryText={session.title}/>
+          })
+          }
+        </List>
     </div>;
   }
 });
 
-export const Home = connect()(pureHome);
+function mapStateToProps(state,ownProps) {
+  return {sessions: state.app.sessions};
+};
+
+export const Home = connect(mapStateToProps)(pureHome);

@@ -13,8 +13,14 @@ export const pureAppBar = React.createClass({
     const {dispatch,open} = this.props;
     dispatch({type: 'MENU_TOGGLE'});
   },
+
+  handleSave: function() {
+    const {dispatch,open} = this.props;
+    dispatch({type: this.props.rightBtn.action, action:{} });
+  },
+
   render: function() {
-    var iconRight = this.props.rightBtn?<FlatButton label={this.props.rightBtn} onTouchTap={this.props.handleSave}/>:null;
+    var iconRight = this.props.rightBtn?<FlatButton label={this.props.rightBtn.text} onTouchTap={this.handleSave}/>:null;
     return <div>
       <AppBar
         title={this.props.title}
@@ -28,8 +34,8 @@ export const pureAppBar = React.createClass({
 
 function mapStateToProps(state) {
   return {
-    title: state.appBar.title,
-    rightBtn: state.appBar.rightBtn
+    title: state.app.appBar.title,
+    rightBtn: state.app.appBar.rightBtn
   };
 }
 
