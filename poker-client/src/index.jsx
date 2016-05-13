@@ -25,14 +25,6 @@ store.dispatch({
   }
 });
 
-var ref = new Firebase("https://burning-torch-5453.firebaseio.com/sessions");
-
-ref.on("child_added", function(snapshot) {
-  store.dispatch({type:"READ_SESSION",session:snapshot.val()});
-}, function (errorObject) {
-  console.log("The read failed: " + errorObject.code);
-});
-
 
 const routes = <Route component={Xpoker}>
   <Route path="/" component={Home} />
@@ -40,7 +32,7 @@ const routes = <Route component={Xpoker}>
 </Route>;
 
 ReactDOM.render(
-  <Provider store={store} fbref={ref}>
+  <Provider store={store}>
     <div>
       <XAppBar title="" rightBtn=""></XAppBar>
       <Router history={browserHistory}>{routes}</Router>

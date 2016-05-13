@@ -10,6 +10,19 @@ export const pureHome = React.createClass({
   componentDidMount: function(){
     const {dispatch} = this.props;
     dispatch({type: 'SET_APP_BAR', title: 'X-Poker', rightBtn: false });
+
+    this.fireBaseRef = new Firebase("https://burning-torch-5453.firebaseio.com/sessions");
+
+    this.onChildAdded = this.fireBaseRef.on("child_added", function(snapshot) {
+      dispatch({type:"READ_SESSION",session:snapshot.val()});
+    }, function (errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    });
+
+  },
+
+  componentWillUnmount: function(){    
+    this.fireBaseRef.off("child_added",this.onChildAdded);
   },
 
   render: function() {
