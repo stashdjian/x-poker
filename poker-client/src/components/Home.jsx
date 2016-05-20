@@ -11,18 +11,11 @@ export const pureHome = React.createClass({
     const {dispatch} = this.props;
     dispatch({type: 'SET_APP_BAR', title: 'X-Poker', rightBtn: false });
 
-    this.fireBaseRef = new Firebase("https://burning-torch-5453.firebaseio.com/sessions");
-
-    this.onChildAdded = this.fireBaseRef.on("child_added", function(snapshot) {
-      dispatch({type:"READ_SESSION",session:snapshot.val()});
-    }, function (errorObject) {
-      console.log("The read failed: " + errorObject.code);
-    });
 
   },
 
-  componentWillUnmount: function(){    
-    this.fireBaseRef.off("child_added",this.onChildAdded);
+  componentWillUnmount: function(){
+    //this.fireBaseRef.off("child_added",this.onChildAdded);
   },
 
   render: function() {
@@ -31,7 +24,7 @@ export const pureHome = React.createClass({
         <List>
           {
           this.props.sessions.map(function(session) {
-            return <ListItem key={session.title} primaryText={session.title}/>
+            return <ListItem key={session.key} primaryText={session.title}/>
           })
           }
         </List>
@@ -39,7 +32,7 @@ export const pureHome = React.createClass({
   }
 });
 
-function mapStateToProps(state,ownProps) {
+function mapStateToProps(state,ownProps) {  
   return {sessions: state.app.sessions};
 };
 

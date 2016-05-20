@@ -25,6 +25,16 @@ store.dispatch({
   }
 });
 
+const fireBaseRef = new Firebase("https://burning-torch-5453.firebaseio.com/sessions");
+
+const onChildAdded = fireBaseRef.on("child_added", function(snapshot) {
+  var session = snapshot.val();
+  session.key = snapshot.key();
+  store.dispatch({type:"READ_SESSION",session:session});
+}, function (errorObject) {
+  console.log("The read failed: " + errorObject.code);
+});
+
 
 const routes = <Route component={Xpoker}>
   <Route path="/" component={Home} />
