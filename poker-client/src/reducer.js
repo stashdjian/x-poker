@@ -17,7 +17,7 @@ var reducer = function(state = {}, action) {
     return Object.assign({}, state, {
         appBarAction: action.action
       });
-    case 'READ_SESSION':  
+    case 'READ_SESSION':
     return Object.assign({}, state, {
         sessions: state.sessions.concat(action.session)
       });

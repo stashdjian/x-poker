@@ -18,21 +18,26 @@ export const pureHome = React.createClass({
     //this.fireBaseRef.off("child_added",this.onChildAdded);
   },
 
+  onSessionSelect: function(key){
+    const {dispatch} = this.props;
+    dispatch({type: 'SESSION_OPEN', key: key });
+  },
+
   render: function() {
     return <div className="x-poker">
         <h3>This is our home page.</h3>
         <List>
           {
           this.props.sessions.map(function(session) {
-            return <ListItem key={session.key} primaryText={session.title}/>
-          })
+            return <ListItem key={session.key} primaryText={session.title} onTouchTap={() => this.onSessionSelect(session.key)}/>
+          }.bind(this))
           }
         </List>
     </div>;
   }
 });
 
-function mapStateToProps(state,ownProps) {  
+function mapStateToProps(state,ownProps) {
   return {sessions: state.app.sessions};
 };
 

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {Router, Route, browserHistory} from 'react-router';
 import Xpoker from './components/Xpoker';
 import {Home} from './components/Home';
+import {AddSession} from './components/AddSession';
 import {Session} from './components/Session';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
@@ -38,7 +39,8 @@ const onChildAdded = fireBaseRef.on("child_added", function(snapshot) {
 
 const routes = <Route component={Xpoker}>
   <Route path="/" component={Home} />
-  <Route path="/session" component={Session} />
+  <Route path="/session" component={AddSession} />
+  <Route path="/:session_key" component={Session} />
 </Route>;
 
 ReactDOM.render(
